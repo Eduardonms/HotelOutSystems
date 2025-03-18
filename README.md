@@ -52,3 +52,10 @@ RegistrarFeedback(HospedeId, Comentarios, Avaliacao) {
 ---
 
 Esses módulos formam a base de um sistema de hotel e hospedagem eficiente. Com a plataforma **OutSystems**, você pode desenvolver essas funcionalidades rapidamente, graças à sua natureza de desenvolvimento visual e de baixo código. Além disso, a plataforma permite fácil integração com outros sistemas e serviços, garantindo uma solução completa e robusta para o seu hotel.
+
+Explicação do código:
+Entities (Entidades): Definem os modelos de dados para Quarto, Reserva, Hospede, Servico e Feedback. Cada entidade possui atributos como identificador, tipo e status, de acordo com as funcionalidades do sistema.
+
+Actions (Ações): São funções que implementam a lógica do sistema, como a criação de reservas, check-in/check-out, solicitação de serviços de quarto e registro de feedback. Cada ação recebe parâmetros e executa a lógica necessária (ex: criar registros, atualizar status, etc.).
+
+Este exemplo serve como um ponto de partida para criar um sistema de reserva de hotel utilizando OutSystems em OML. A partir desse esqueleto, você pode expandir e personalizar conforme as necessidades do seu projeto.
