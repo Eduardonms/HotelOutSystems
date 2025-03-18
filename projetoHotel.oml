@@ -1,0 +1,133 @@
+<OutSystems>
+    <Entities>
+        <!-- Entidade para o Quarto -->
+        <Entity Name="Quarto">
+            <Attributes>
+                <Attribute Name="ID" Type="Integer" IsIdentifier="True"/>
+                <Attribute Name="Tipo" Type="Text"/>
+                <Attribute Name="Preco" Type="Decimal"/>
+                <Attribute Name="Status" Type="Text"/>
+            </Attributes>
+        </Entity>
+
+        <!-- Entidade para a Reserva -->
+        <Entity Name="Reserva">
+            <Attributes>
+                <Attribute Name="ID" Type="Integer" IsIdentifier="True"/>
+                <Attribute Name="QuartoID" Type="Integer"/>
+                <Attribute Name="DataEntrada" Type="Date"/>
+                <Attribute Name="DataSaida" Type="Date"/>
+                <Attribute Name="Status" Type="Text"/>
+                <Attribute Name="HospedeID" Type="Integer"/>
+            </Attributes>
+        </Entity>
+
+        <!-- Entidade para o Hóspede -->
+        <Entity Name="Hospede">
+            <Attributes>
+                <Attribute Name="ID" Type="Integer" IsIdentifier="True"/>
+                <Attribute Name="Nome" Type="Text"/>
+                <Attribute Name="Email" Type="Text"/>
+                <Attribute Name="Telefone" Type="Text"/>
+            </Attributes>
+        </Entity>
+
+        <!-- Entidade para os Serviços -->
+        <Entity Name="Servico">
+            <Attributes>
+                <Attribute Name="ID" Type="Integer" IsIdentifier="True"/>
+                <Attribute Name="Descricao" Type="Text"/>
+                <Attribute Name="Preco" Type="Decimal"/>
+            </Attributes>
+        </Entity>
+
+        <!-- Entidade para Feedback -->
+        <Entity Name="Feedback">
+            <Attributes>
+                <Attribute Name="ID" Type="Integer" IsIdentifier="True"/>
+                <Attribute Name="HospedeID" Type="Integer"/>
+                <Attribute Name="Comentario" Type="Text"/>
+                <Attribute Name="Avaliacao" Type="Integer"/>
+            </Attributes>
+        </Entity>
+    </Entities>
+
+    <Actions>
+        <!-- Ação de reserva de quarto -->
+        <Action Name="ReservaQuarto">
+            <Parameters>
+                <Parameter Name="TipoQuarto" Type="Text"/>
+                <Parameter Name="DataEntrada" Type="Date"/>
+                <Parameter Name="DataSaida" Type="Date"/>
+                <Parameter Name="ServicosAdicionais" Type="Text"/>
+            </Parameters>
+            <Logic>
+                <!-- Lógica para processar a reserva -->
+                <Create Entity="Reserva">
+                    <Set Attributes="QuartoID = TipoQuarto, DataEntrada = DataEntrada, DataSaida = DataSaida"/>
+                </Create>
+            </Logic>
+        </Action>
+
+        <!-- Ação de check-in -->
+        <Action Name="CheckIn">
+            <Parameters>
+                <Parameter Name="ReservaId" Type="Integer"/>
+            </Parameters>
+            <Logic>
+                <!-- Lógica para realizar o check-in -->
+                <Update Entity="Reserva">
+                    <Set Attributes="Status = 'Check-In'"/>
+                    <Where>
+                        <Condition Attribute="ID" Value="ReservaId"/>
+                    </Where>
+                </Update>
+            </Logic>
+        </Action>
+
+        <!-- Ação de check-out -->
+        <Action Name="CheckOut">
+            <Parameters>
+                <Parameter Name="ReservaId" Type="Integer"/>
+            </Parameters>
+            <Logic>
+                <!-- Lógica para realizar o check-out -->
+                <Update Entity="Reserva">
+                    <Set Attributes="Status = 'Check-Out'"/>
+                    <Where>
+                        <Condition Attribute="ID" Value="ReservaId"/>
+                    </Where>
+                </Update>
+            </Logic>
+        </Action>
+
+        <!-- Ação para solicitar serviço de quarto -->
+        <Action Name="SolicitarServicoQuarto">
+            <Parameters>
+                <Parameter Name="QuartoId" Type="Integer"/>
+                <Parameter Name="Servico" Type="Text"/>
+            </Parameters>
+            <Logic>
+                <!-- Lógica para processar o pedido de serviço de quarto -->
+                <Create Entity="Servico">
+                    <Set Attributes="Descricao = Servico, QuartoID = QuartoId"/>
+                </Create>
+            </Logic>
+        </Action>
+
+        <!-- Ação para registrar feedback -->
+        <Action Name="RegistrarFeedback">
+            <Parameters>
+                <Parameter Name="HospedeId" Type="Integer"/>
+                <Parameter Name="Comentarios" Type="Text"/>
+                <Parameter Name="Avaliacao" Type="Integer"/>
+            </Parameters>
+            <Logic>
+                <!-- Lógica para armazenar o feedback -->
+                <Create Entity="Feedback">
+                    <Set Attributes="HospedeID = HospedeId, Comentario = Comentarios, Avaliacao = Avaliacao"/>
+                </Create>
+            </Logic>
+        </Action>
+    </Actions>
+</OutSystems>
