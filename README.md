@@ -52,3 +52,29 @@ RegistrarFeedback(HospedeId, Comentarios, Avaliacao) {
 ---
 
 Esses módulos formam a base de um sistema de hotel e hospedagem eficiente. Com a plataforma **OutSystems**, você pode desenvolver essas funcionalidades rapidamente, graças à sua natureza de desenvolvimento visual e de baixo código. Além disso, a plataforma permite fácil integração com outros sistemas e serviços, garantindo uma solução completa e robusta para o seu hotel.
+
+---
+
+Versão Mobile
+
+Explicação do código:
+Entidades (Entities): As entidades para Quarto, Reserva, Hospede, Servico, e Feedback permanecem a mesma lógica da versão web, com atributos como ID, Tipo, DataEntrada, Status, etc.
+
+Ações (Actions): As ações como ReservaQuarto, CheckIn, CheckOut, SolicitarServicoQuarto e RegistrarFeedback continuam sendo essenciais, com lógica semelhante à versão para web.
+
+Telhas (Screens):
+
+ListaDeQuartos: Tela para o hóspede visualizar os quartos disponíveis, selecionar e fazer a reserva.
+
+DetalhesReserva: Tela onde o hóspede pode visualizar os detalhes da sua reserva e realizar o check-in ou check-out.
+
+ServicoDeQuarto: Tela onde o hóspede pode solicitar serviços de quarto, como refeições ou limpeza.
+
+Feedback: Tela para os hóspedes deixarem seus comentários e avaliações sobre a estadia.
+
+Como Funciona:
+O OutSystems permite que você crie interfaces visuais com base nas entidades e ações definidas, com recursos para agrupar as informações e permitir interações rápidas.
+
+O layout das telas pode ser otimizado para dispositivos móveis com foco em uma navegação simples e intuitiva.
+
+Esse exemplo de código OML para a versão Mobile adapta as funcionalidades do sistema para smartphones e tablets, proporcionando uma experiência interativa e otimizada para os usuários móveis.

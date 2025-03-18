@@ -1,0 +1,181 @@
+<OutSystems>
+    <!-- Definição das Entidades -->
+    <Entities>
+        <!-- Entidade para o Quarto -->
+        <Entity Name="Quarto">
+            <Attributes>
+                <Attribute Name="ID" Type="Integer" IsIdentifier="True"/>
+                <Attribute Name="Tipo" Type="Text"/>
+                <Attribute Name="Preco" Type="Decimal"/>
+                <Attribute Name="Status" Type="Text"/>
+            </Attributes>
+        </Entity>
+
+        <!-- Entidade para a Reserva -->
+        <Entity Name="Reserva">
+            <Attributes>
+                <Attribute Name="ID" Type="Integer" IsIdentifier="True"/>
+                <Attribute Name="QuartoID" Type="Integer"/>
+                <Attribute Name="DataEntrada" Type="Date"/>
+                <Attribute Name="DataSaida" Type="Date"/>
+                <Attribute Name="Status" Type="Text"/>
+                <Attribute Name="HospedeID" Type="Integer"/>
+            </Attributes>
+        </Entity>
+
+        <!-- Entidade para o Hóspede -->
+        <Entity Name="Hospede">
+            <Attributes>
+                <Attribute Name="ID" Type="Integer" IsIdentifier="True"/>
+                <Attribute Name="Nome" Type="Text"/>
+                <Attribute Name="Email" Type="Text"/>
+                <Attribute Name="Telefone" Type="Text"/>
+            </Attributes>
+        </Entity>
+
+        <!-- Entidade para os Serviços -->
+        <Entity Name="Servico">
+            <Attributes>
+                <Attribute Name="ID" Type="Integer" IsIdentifier="True"/>
+                <Attribute Name="Descricao" Type="Text"/>
+                <Attribute Name="Preco" Type="Decimal"/>
+            </Attributes>
+        </Entity>
+
+        <!-- Entidade para Feedback -->
+        <Entity Name="Feedback">
+            <Attributes>
+                <Attribute Name="ID" Type="Integer" IsIdentifier="True"/>
+                <Attribute Name="HospedeID" Type="Integer"/>
+                <Attribute Name="Comentario" Type="Text"/>
+                <Attribute Name="Avaliacao" Type="Integer"/>
+            </Attributes>
+        </Entity>
+    </Entities>
+
+    <!-- Definição das Ações -->
+    <Actions>
+        <!-- Ação de reserva de quarto -->
+        <Action Name="ReservaQuarto">
+            <Parameters>
+                <Parameter Name="TipoQuarto" Type="Text"/>
+                <Parameter Name="DataEntrada" Type="Date"/>
+                <Parameter Name="DataSaida" Type="Date"/>
+                <Parameter Name="ServicosAdicionais" Type="Text"/>
+            </Parameters>
+            <Logic>
+                <Create Entity="Reserva">
+                    <Set Attributes="QuartoID = TipoQuarto, DataEntrada = DataEntrada, DataSaida = DataSaida"/>
+                </Create>
+            </Logic>
+        </Action>
+
+        <!-- Ação de check-in -->
+        <Action Name="CheckIn">
+            <Parameters>
+                <Parameter Name="ReservaId" Type="Integer"/>
+            </Parameters>
+            <Logic>
+                <Update Entity="Reserva">
+                    <Set Attributes="Status = 'Check-In'"/>
+                    <Where>
+                        <Condition Attribute="ID" Value="ReservaId"/>
+                    </Where>
+                </Update>
+            </Logic>
+        </Action>
+
+        <!-- Ação de check-out -->
+        <Action Name="CheckOut">
+            <Parameters>
+                <Parameter Name="ReservaId" Type="Integer"/>
+            </Parameters>
+            <Logic>
+                <Update Entity="Reserva">
+                    <Set Attributes="Status = 'Check-Out'"/>
+                    <Where>
+                        <Condition Attribute="ID" Value="ReservaId"/>
+                    </Where>
+                </Update>
+            </Logic>
+        </Action>
+
+        <!-- Ação para solicitar serviço de quarto -->
+        <Action Name="SolicitarServicoQuarto">
+            <Parameters>
+                <Parameter Name="QuartoId" Type="Integer"/>
+                <Parameter Name="Servico" Type="Text"/>
+            </Parameters>
+            <Logic>
+                <Create Entity="Servico">
+                    <Set Attributes="Descricao = Servico, QuartoID = QuartoId"/>
+                </Create>
+            </Logic>
+        </Action>
+
+        <!-- Ação para registrar feedback -->
+        <Action Name="RegistrarFeedback">
+            <Parameters>
+                <Parameter Name="HospedeId" Type="Integer"/>
+                <Parameter Name="Comentarios" Type="Text"/>
+                <Parameter Name="Avaliacao" Type="Integer"/>
+            </Parameters>
+            <Logic>
+                <Create Entity="Feedback">
+                    <Set Attributes="HospedeID = HospedeId, Comentario = Comentarios, Avaliacao = Avaliacao"/>
+                </Create>
+            </Logic>
+        </Action>
+    </Actions>
+
+    <!-- Definição das Telas (Screens) -->
+    <Screens>
+        <!-- Tela inicial - Lista de Quartos -->
+        <Screen Name="ListaDeQuartos" Type="Mobile">
+            <Elements>
+                <Text Name="TituloTela" Value="Escolha o seu quarto" />
+                <List Name="ListaQuartos" Entity="Quarto">
+                    <Items>
+                        <Label Name="TipoQuarto" Text="Tipo de Quarto"/>
+                        <Label Name="Preco" Text="Preço por noite"/>
+                        <Button Name="ReservarButton" Action="ReservaQuarto" Label="Reservar" />
+                    </Items>
+                </List>
+            </Elements>
+        </Screen>
+
+        <!-- Tela de Detalhes da Reserva -->
+        <Screen Name="DetalhesReserva" Type="Mobile">
+            <Elements>
+                <Text Name="Titulo" Value="Detalhes da Reserva" />
+                <Text Name="DataEntrada" Value="Data de Entrada"/>
+                <Text Name="DataSaida" Value="Data de Saída"/>
+                <Button Name="CheckInButton" Action="CheckIn" Label="Realizar Check-In" />
+                <Button Name="CheckOutButton" Action="CheckOut" Label="Realizar Check-Out" />
+            </Elements>
+        </Screen>
+
+        <!-- Tela de Solicitação de Serviço -->
+        <Screen Name="ServicoDeQuarto" Type="Mobile">
+            <Elements>
+                <Text Name="TituloServico" Value="Solicitar Serviço de Quarto" />
+                <List Name="ListaDeServicos" Entity="Servico">
+                    <Items>
+                        <Label Name="Descricao" Text="Serviço"/>
+                        <Button Name="SolicitarButton" Action="SolicitarServicoQuarto" Label="Solicitar" />
+                    </Items>
+                </List>
+            </Elements>
+        </Screen>
+
+        <!-- Tela de Feedback -->
+        <Screen Name="Feedback" Type="Mobile">
+            <Elements>
+                <Text Name="TituloFeedback" Value="Deixe seu Feedback" />
+                <TextBox Name="Comentario" Placeholder="Comentário" />
+                <Rating Name="Avaliacao" MaxValue="5" />
+                <Button Name="EnviarFeedback" Action="RegistrarFeedback" Label="Enviar" />
+            </Elements>
+        </Screen>
+    </Screens>
+</OutSystems>
