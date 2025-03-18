@@ -53,9 +53,11 @@ RegistrarFeedback(HospedeId, Comentarios, Avaliacao) {
 
 Esses módulos formam a base de um sistema de hotel e hospedagem eficiente. Com a plataforma **OutSystems**, você pode desenvolver essas funcionalidades rapidamente, graças à sua natureza de desenvolvimento visual e de baixo código. Além disso, a plataforma permite fácil integração com outros sistemas e serviços, garantindo uma solução completa e robusta para o seu hotel.
 
-```
+---
 
 Versão Mobile
+
+```
 
 Explicação do código:
 Entidades (Entities): As entidades para Quarto, Reserva, Hospede, Servico, e Feedback permanecem a mesma lógica da versão web, com atributos como ID, Tipo, DataEntrada, Status, etc.
@@ -78,7 +80,7 @@ O OutSystems permite que você crie interfaces visuais com base nas entidades e 
 O layout das telas pode ser otimizado para dispositivos móveis com foco em uma navegação simples e intuitiva.
 
 Esse exemplo de código OML para a versão Mobile adapta as funcionalidades do sistema para smartphones e tablets, proporcionando uma experiência interativa e otimizada para os usuários móveis.
-=======
+
 Explicação do código:
 Entities (Entidades): Definem os modelos de dados para Quarto, Reserva, Hospede, Servico e Feedback. Cada entidade possui atributos como identificador, tipo e status, de acordo com as funcionalidades do sistema.
 
